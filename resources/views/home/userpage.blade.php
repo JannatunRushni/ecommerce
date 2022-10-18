@@ -11,7 +11,7 @@
       <meta name="description" content="" />
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
-      <title>Famms - Fashion HTML Template</title>
+      <title>Famms - Fashion </title>
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
       <!-- font awesome style -->
@@ -41,6 +41,31 @@
       <!-- product section -->
       @include('home.product')
       <!-- end product section -->
+
+
+      <div style="text-align: center; padding-bottom: 30px;">
+        <h1 style="font-size: 30px; text-align:center; padding-top: 20px;
+        padding-bottom: 20px;">Comments</h1>
+
+        <form>
+            <textarea style="height: 150px; width: 600px;" placeholder="
+            Comment something here"></textarea>
+
+            <br>
+
+            <a href="" class="btn btn-primary">Comment</a>
+
+        </form>
+
+      </div>
+
+      <div>
+
+        <h1 style="font-size: 20px; padding-bottom: 20px;">All Comments</h1>
+
+      </div>
+
+
 
       <!-- subscribe section -->
       @include('home.subscribe')

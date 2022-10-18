@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+
 use App\Models\Product;
 
 use App\Models\Chart;
@@ -46,9 +47,15 @@ class HomeController extends Controller
                 $total_revenue=$total_revenue + $order->price;
             }
 
+            $total_delivered=order::where('delivery_status','=','delivered')->get()->
+            count();
+
+            $total_processing=order::where('delivery_status','=','processing')->get()->
+            count();
+
 
             return view('admin.home',compact('total_product',
-            'total_order','total_user','total_revenue'));
+            'total_order','total_user','total_revenue','total_delivered','total_processing'));
         }
 
         else{
@@ -260,6 +267,41 @@ class HomeController extends Controller
         Session::flash('success', 'Payment successful!');
 
         return back();
+    }
+
+    public function show_order()
+    {
+
+
+        if(Auth::id())
+        {
+            $user=Auth::user();
+
+            $userid=$user->id;
+
+            $order=order::where('user_id','=',$userid)->get();
+
+            return view('home.order',compact('order'));
+        }
+
+        else
+        {
+            return redirect('login');
+        }
+
+    }
+
+    public function cancel_order($id)
+    {
+
+        $order=order::find($id);
+
+        $order->delivery_status='You canceled the order';
+
+        $order->save();
+
+        return redirect()->back();
+
     }
 
 

@@ -30,6 +30,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{url('show_order')}}">Order</a>
+                 </li>
+
+                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('show_chart') }}">Chart</a>
                  </li>
 
