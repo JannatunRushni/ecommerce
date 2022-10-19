@@ -88,3 +88,4 @@ Route::post('stripe/{totalprice}',[HomeController::class, 'stripePost'])->name('
 route::get('/show_order',[HomeController::class,'show_order']);
 
 route::get('/cancel_order/{id}',[HomeController::class,'cancel_order']);
+

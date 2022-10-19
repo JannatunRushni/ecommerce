@@ -20,6 +20,10 @@
       <link href="home/css/style.css" rel="stylesheet" />
       <!-- responsive style -->
       <link href="home/css/responsive.css" rel="stylesheet" />
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
    </head>
    <body>
       <div class="hero_area">
@@ -43,27 +47,67 @@
       <!-- end product section -->
 
 
+
       <div style="text-align: center; padding-bottom: 30px;">
-        <h1 style="font-size: 30px; text-align:center; padding-top: 20px;
-        padding-bottom: 20px;">Comments</h1>
+
+        <h1 style="font-size: 30px; text-align:center; padding-top:20px;
+        padding-bottom:20px;">Comments</h1>
 
         <form>
-            <textarea style="height: 150px; width: 600px;" placeholder="
-            Comment something here"></textarea>
+            <textarea style="height: 150px; width: 600px;" placeholder="Comment something here"></textarea>
 
             <br>
 
-            <a href="" class="btn btn-primary">Comment</a>
+            <a href="" class="btn btn-primary">Comments</a>
 
         </form>
 
       </div>
 
-      <div>
+      <div style="padding-left: 20%;">
 
         <h1 style="font-size: 20px; padding-bottom: 20px;">All Comments</h1>
 
+        <div>
+
+            <b>Admin</b>
+            <p>This is my first comment</p>
+
+            <a href="javascript::void(0);" onclick="reply(this)">Reply</a>
+
+        </div>
+
+        <div>
+
+            <b>Alex</b>
+            <p>This is my 2nd comment</p>
+
+            <a href="javascript::void(0);" onclick="reply(this)">Reply</a>
+
+        </div>
+
+        <div>
+
+            <b>Jhon</b>
+            <p>This is my 3rd comment</p>
+
+            <a href="javascript::void(0);" onclick="reply(this)">Reply</a>
+
+        </div>
+
+        <div style="display: none;" class="replyDiv">
+
+            <textarea style="height: 100px; width: 500px;" placeholder="Write Something Here"></textarea>
+
+            <br>
+
+            <a href="" class="btn btn-primary">Reply</a>
+
+          </div>
+
       </div>
+
+
 
 
 
@@ -83,6 +127,19 @@
 
          </p>
       </div>
+
+
+      <script type="text/javascript">
+
+        function reply(caller)
+        {
+            $('.replyDiv').insertAfter($(caller));
+
+            $('.replyDiv').show();
+        }
+
+      </script>
+
       <!-- jQery -->
       <script src="home/js/jquery-3.4.1.min.js"></script>
       <!-- popper js -->

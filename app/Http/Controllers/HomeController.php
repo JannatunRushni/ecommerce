@@ -16,6 +16,10 @@ use Session;
 
 use Stripe;
 
+use App\Models\Comment;
+
+
+
 
 
 class HomeController extends Controller
@@ -61,6 +65,9 @@ class HomeController extends Controller
         else{
 
             $product = Product::paginate(10);
+
+
+
             return view('home.userpage',compact('product'));
         }
     }
@@ -303,6 +310,7 @@ class HomeController extends Controller
         return redirect()->back();
 
     }
+
 
 
 }
