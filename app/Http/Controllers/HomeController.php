@@ -18,6 +18,9 @@ use Stripe;
 
 use App\Models\Comment;
 
+use App\Models\Reply;
+use Illuminate\Console\View\Components\Alert as ComponentsAlert;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 
@@ -28,8 +31,15 @@ class HomeController extends Controller
     public function index()
     {
         $product = Product::paginate(10);
-        return view('home.userpage',compact('product'));
+
+        $comment=comment::orderby('id','desc')->get();
+
+        $reply=reply::all();
+
+        return view('home.userpage',compact('product','comment','reply'));
     }
+
+
     public function redirect()
     {
         $usertype = Auth::user()->usertype;
@@ -66,15 +76,18 @@ class HomeController extends Controller
 
             $product = Product::paginate(10);
 
+            $comment=comment::orderby('id','desc')->get();
 
+            $reply=reply::all();
 
-            return view('home.userpage',compact('product'));
+            return view('home.userpage',compact('product','comment','reply'));
         }
     }
 
     public function product_details($id)
     {
         $product=product::find($id);
+
         return view('home.product_details',compact('product'));
     }
 
@@ -83,7 +96,46 @@ class HomeController extends Controller
         if(Auth::id())
         {
             $user=Auth::user();
+
+            $userid=$user->id;
+
             $product = product::find($id);
+
+            $product_exist_id=chart::where('product_id','=',$id)->where('user_id','=',$userid)->get('id')->first();
+
+            if($product_exist_id)
+            {
+                $chart=chart::find($product_exist_id)->first();
+
+                $quantity=$chart->quantity;
+
+                $chart->quantity=$quantity + $request->quantity;
+
+            if($product->discount_price!=null)
+            {
+
+                $chart->price=$product->discount_price * $chart->quantity;
+
+            }
+
+            else
+            {
+                $chart->price=$product->price * $chart->quantity;
+            }
+
+
+                $chart->save();
+
+                Alert::warning('Product Added Successfully','We have added product to the chart');
+
+                return redirect()->back();
+
+            }
+
+            else
+            {
+
+
             $chart = new chart;
 
             $chart->name=$user->name;
@@ -120,7 +172,10 @@ class HomeController extends Controller
 
             $chart->save();
 
-            return redirect()->back();
+            return redirect()->back()->with('message','Product Added Successfully');
+
+            }
+
 
 
         }
@@ -308,6 +363,101 @@ class HomeController extends Controller
         $order->save();
 
         return redirect()->back();
+
+    }
+
+
+    public function add_comment(Request $request)
+    {
+
+        if(Auth::id())
+        {
+            $comment=new comment;
+
+            $comment->name=Auth::user()->name;
+
+            $comment->user_id=Auth::user()->id;
+
+            $comment->comment=$request->comment;
+
+            $comment->save();
+
+            return redirect()->back();
+
+
+        }
+
+        else
+        {
+
+            return redirect('login');
+
+        }
+    }
+
+    public function add_reply(Request $request)
+    {
+        if(Auth::id())
+        {
+
+            $reply=new reply;
+
+            $reply->name=Auth::user()->name;
+
+            $reply->user_id=Auth::user()->id;
+
+            $reply->comment_id=$request->commentId;
+
+            $reply->reply=$request->reply;
+
+            $reply->save();
+
+            return redirect()->back();
+
+        }
+
+        else
+        {
+            return redirect('login');
+        }
+    }
+
+    public function product_search(Request $request)
+    {
+        $comment=comment::orderby('id','desc')->get();
+
+        $reply=reply::all();
+
+        $search_text=$request->search;
+
+        $product=product::where('title','LIKE',"%$search_text%")->orWhere('category','LIKE',"%$search_text%")->paginate(10);
+
+        return view('home.userpage',compact('product','comment','reply'));
+
+    }
+
+    public function products()
+    {
+        $product = Product::paginate(10);
+
+        $comment=comment::orderby('id','desc')->get();
+
+        $reply=reply::all();
+
+            return view('home.all_product',compact('product','comment','reply'));
+    }
+
+    public function search_product(Request $request)
+    {
+        $comment=comment::orderby('id','desc')->get();
+
+        $reply=reply::all();
+
+        $search_text=$request->search;
+
+        $product=product::where('title','LIKE',"%$search_text%")->orWhere('category','LIKE',"%$search_text%")->paginate(10);
+
+        return view('home.all_product',compact('product','comment','reply'));
 
     }
 

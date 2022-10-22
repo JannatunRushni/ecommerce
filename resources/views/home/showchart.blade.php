@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <!-- Basic -->
-      <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <!-- Mobile Metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-      <!-- Site Metas -->
-      <meta name="keywords" content="" />
-      <meta name="description" content="" />
-      <meta name="author" content="" />
-      <link rel="shortcut icon" href="images/favicon.png" type="">
-      <title>Famms - Fashion</title>
-      <!-- bootstrap core css -->
-      <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
-      <!-- font awesome style -->
-      <link href="home/css/font-awesome.min.css" rel="stylesheet" />
-      <!-- Custom styles for this template -->
-      <link href="home/css/style.css" rel="stylesheet" />
-      <!-- responsive style -->
-      <link href="home/css/responsive.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/favicon.png" type="">
+    <title>Famms - Fashion </title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/bootstrap.css') }}" />
+    <!-- font awesome style -->
+    <link href="{{ asset('home/css/font-awesome.min.css') }}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('home/css/style.css') }}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{{ asset('home/css/responsive.css') }}" rel="stylesheet" />
+
+
 
       <style type="text/css">
         .center
@@ -59,6 +60,10 @@
 
    </head>
    <body>
+
+    @include('sweetalert::alert')
+
+
       <div class="hero_area">
         <!-- header section strats -->
             @include('home.header')
@@ -102,7 +107,7 @@
                     <td>${{$chart->price}}</td>
                     <td><img class="img_deg" src="/product/{{ $chart->image }}"></td>
                     <td>
-                        <a class="btn btn-danger" onclick="return confirm('Are you sure to remove this product ?')"
+                        <a class="btn btn-danger" onclick="confirmation(event)"
                         href="{{ url('/remove_chart',$chart->id) }}">Remove Product</a></td>
                 </tr>
                 <?php $totalprice=$totalprice + $chart->price ?>
